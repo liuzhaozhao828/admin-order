@@ -1,0 +1,76 @@
+
+.layout{
+
+  .menu-text{
+    background: black;
+    color: #999;
+    height: 40px;
+    line-height: 30px;
+    padding: 10px;
+  }
+
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color .3s;
+  }
+
+  .trigger:hover {
+    color: #4D8BB6;
+  }
+
+
+  .header{
+    background: -webkit-linear-gradient(left, #4D8BB6, white); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #4D8BB6, white); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #4D8BB6, white); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #4D8BB6 , white); /* 标准的语法（必须放在最后） */
+    padding: 0;
+  }
+
+
+  .content{
+    margin: 24px 16px;
+    padding: 24px;
+    background: #fff;
+    min-height: calc(~'100vh - 120px')
+  }
+
+  .logo {
+    width: 200px;
+    height: 64px;
+    background: transparent;
+    padding: 16px;
+    color: white;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+  }
+
+}
+
+
+:global{
+  .title_1{
+    color: #4D8BB6;
+  }
+
+  .query li{
+    >span:nth-child(1){
+      width: 60px;
+      display: inline-block;
+      text-align: right;
+    }
+    list-style: none;
+    float: left;
+    margin-right: 40px;
+    margin-bottom: 10px;
+  }
+}
+
+
+
