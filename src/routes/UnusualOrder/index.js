@@ -3,12 +3,10 @@
  */
 import React from 'react';
 import { connect } from 'dva';
-import moment from 'moment'
-import { Card, Table, Select, Input, Button, DatePicker, Modal, message} from 'antd'
+import { Card, Table, Select, Input, Button, Modal, message} from 'antd'
 import request from '../../utils/request'
 
 const { Option } = Select
-const { RangePicker } = DatePicker
 
 
 @connect(({
@@ -25,7 +23,8 @@ class UnusualOrder extends React.Component {
 
   getList=(params={})=>{
     const { query } = this.props
-    request('/admin/finance/unusualOrder/getList', {...query, pageSize: 10, pageNum: 1, ...params}).then(({data: {code, msg, data={}}}) => {
+    const { pageSize = 10, pageNum = 1 } = this.state
+    request('/admin/finance/unusualOrder/getList', {...query, pageSize, pageNum, ...params}).then(({data: {code, msg, data={}}}) => {
       const { total = 0, pageSize = 10, pageNum = 1, list=[] } = data
       this.setState({
         total,
@@ -109,6 +108,7 @@ class UnusualOrder extends React.Component {
                                  if(code==='000000'){
                                    message.success('标记成功')
                                  }
+                                 this.getList()
                                })
                              }
                            });
@@ -121,7 +121,7 @@ class UnusualOrder extends React.Component {
 
     return (
       <div>
-        <Card title={<span className='title_1'>收单账户</span>}>
+        <Card title={<span className='title_1'>异常订单</span>}>
           <div style={{ overflow: 'hidden', marginBottom: '10px' }}>
             <ul className='query'>
               <li>

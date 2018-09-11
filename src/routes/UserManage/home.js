@@ -28,7 +28,8 @@ class UserManageHome extends React.Component {
 
   getList=(params={})=>{
     const { query } = this.props
-    request('/admin/systemManage/userManage/getList', {...query, pageSize: 10, pageNum: 1, ...params}).then(({data: {code, msg, data={}}}) => {
+    const { pageSize = 10, pageNum = 1} = this.state
+    request('/admin/systemManage/userManage/getList', {...query, pageSize, pageNum, ...params}).then(({data: {code, msg, data={}}}) => {
       const { total = 0, pageSize = 10, pageNum = 1, list=[] } = data
       this.setState({
         total,
@@ -107,6 +108,7 @@ class UserManageHome extends React.Component {
                 request('/admin/systemManage/userManage/resetPassword', {userName: text, userId: record.userId}).then(({data: {code}})=>{
                   if(code==='000000'){
                     message.success('重置成功')
+                    this.getList()
                   }
                 })
               }
@@ -127,6 +129,7 @@ class UserManageHome extends React.Component {
                 request('/admin/systemManage/userManage/freezeUser', {userName: text, userId: record.userId}).then(({data: {code}})=>{
                   if(code==='000000'){
                     message.success('账户已冻结')
+                    this.getList()
                   }
                 })
               }

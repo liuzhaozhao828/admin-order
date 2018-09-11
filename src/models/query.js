@@ -1,5 +1,4 @@
-import * as appServices from '../services/app'
-import moment from 'moment';
+import { routerRedux } from 'dva/router'
 
 export default {
 
@@ -11,9 +10,9 @@ export default {
 
 
   effects: {
-    *fetch({ payload }, { call, put }) {  // eslint-disable-line
-      const data = yield call(appServices.query,{payload})
-      yield put({ type: 'save' ,payload:{data}});
+    *toDetail({ payload }, { call, put }) {  // eslint-disable-line
+      yield put({ type: 'save' ,payload});
+      yield put(routerRedux.push('/financeDetail'));
     },
   },
 

@@ -1,5 +1,6 @@
-import * as appServices from '../services/app'
-import {menu, comps} from '../menu';
+import {comps} from '../menu';
+import {routerRedux} from "dva/router";
+import { logout } from '../services/app';
 
 export default {
 
@@ -32,7 +33,20 @@ export default {
   },
 
   effects: {
-
+    *logout({ payload }, { call, put }) {  // eslint-disable-line
+      const {data:{code}} = yield call(logout);
+      if(code==='000000'){
+        yield put({
+          type: 'save' ,
+          payload:{
+            login: false,
+            userName: '',
+            nickName: ''
+          }
+        });
+        yield put(routerRedux.push('/login'));
+      }
+    },
   },
 
   reducers: {

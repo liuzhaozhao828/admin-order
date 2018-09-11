@@ -4,10 +4,10 @@
 import React from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
-import { Card, Table, Select, Input, Button, DatePicker } from 'antd'
+import { Card, Table, Input, Button, DatePicker } from 'antd'
 import request from '../../utils/request'
+import {dealQuery} from '../../utils/tools'
 
-const { Option } = Select
 const { RangePicker } = DatePicker
 
 
@@ -63,7 +63,7 @@ class FinanceBalance extends React.Component {
 
   render() {
 
-    const { query={} } = this.props
+    const { query={}, dispatch } = this.props
     const { total = 0, pageSize = 10, pageNum = 1, list=[] } = this.state
 
     const columns=[{
@@ -94,14 +94,33 @@ class FinanceBalance extends React.Component {
       title: '期末余额',
       dataIndex: 'endAmount',
       key: 'endAmount',
-    }]
+    },{
+      title: '操作',
+      dataIndex: 'accountId',
+      key: 'handle',
+      render: (text, {merchantId})=>{
+        return <Button type='primary' size='small' style={{lineHeight: '20px'}} onClick={()=>{
+            dispatch({
+              type: 'query/toDetail',
+              payload: {
+                financeDetail:{
+                  accountId: text,
+                  merchantId
+                }
+              }
+            })
+          }}>
+            收支明细
+          </Button>
+      }
+    },]
 
     return (
       <div>
-        <Card title={<span className='title_1'>收支明细</span>}
+        <Card title={<span className='title_1'>财务对账</span>}
               extra={
                 <a
-                  href={`/admin/finance/financeBalance/exportData${this.dealQuery()}`}
+                  href={`/admin/finance/financeBalance/exportData${dealQuery(query)}`}
                   rel="noopener noreferrer nofollow"
                   target="_blank"
                 >

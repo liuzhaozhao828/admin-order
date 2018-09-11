@@ -9,6 +9,7 @@ import {connect} from "dva";
 
 const FormItem = Form.Item
 const Option = Select.Option
+const TextArea = Input.TextArea
 
 @connect()
 class UserForm extends React.Component {
@@ -116,6 +117,16 @@ class UserForm extends React.Component {
                 <Option value="business">运营</Option>
                 <Option value="merchant">商户</Option>
               </Select>
+            )}
+          </FormItem>
+          <FormItem key='auth'
+                    {...formItemLayout}
+                    label="权限"
+          >
+            {getFieldDecorator('auth', {
+
+            })(
+              <TextArea autosize={{ minRows: 4, maxRows: 10 }} style={{width: '300px'}}/>
             )}
           </FormItem>
           <FormItem  key='handle'   {...tailFormItemLayout} >

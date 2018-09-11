@@ -116,6 +116,8 @@ class PayOrder extends React.Component {
                           this.onQueryChange({orderStatus:value})
                         }}>
                   <Option value="ALL">全部</Option>
+                  <Option value="deal">处理中</Option>
+                  <Option value="done">已完成</Option>
                 </Select>
               </li>
               <li>

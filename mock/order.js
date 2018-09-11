@@ -37,6 +37,7 @@ let all = Mock.mock({
       freezeAmount:'111.99',  //冻结余额
       limitAmount:'222.99',  //限额
       permitTransaction:'abc',  //允许交易
+      cardId:'cardId',  //允许交易
     }
   ],
   'merchantAccount|23': [
@@ -48,6 +49,7 @@ let all = Mock.mock({
       leftAmount:'333.99',  //可用余额
       freezeAmount:'111.99',  //冻结余额
       permitTransaction:'abc',  //允许交易
+      investRate:'222%',  //允许交易
     }
   ],
   'userManage|23': [
@@ -105,6 +107,17 @@ let all = Mock.mock({
       endAmount:'444.11',  //期末余额
     }
   ],
+  'financeSettlement|23': [
+    {
+      merchantId: '@id',  //商户号
+      date: '@datetime',  //发起时间
+      availableAmount:'111.11',  //可用余额
+      settleAmount:'222.11',  //结算金额
+      account:'@id',  //收款账户
+      'status|1': ['待结算','打款中', '已完成'],
+      remark:'@cword(10,20)',  //备注
+    }
+  ],
 })
 
 export default {
@@ -124,7 +137,9 @@ export default {
     const list = data.slice((pageNum - 1) * pageSize, pageNum * pageSize);
     res.json({code: '000000', msg: "success", data: {total: data.length, pageNum, pageSize, list}})
   },
-  'POST /admin/account/acquirerAccount': (req, res)=> {
+
+  //账户管理
+  'POST /admin/account/acquirerAccount/getList': (req, res)=> {
     let {pageNum = 1, pageSize = 10} = req.body;
     pageNum *= 1;
     pageSize *= 1;
@@ -132,13 +147,22 @@ export default {
     const list = data.slice((pageNum - 1) * pageSize, pageNum * pageSize);
     res.json({code: '000000', msg: "success", data: {total: data.length, pageNum, pageSize, list}})
   },
-  'POST /admin/account/merchantAccount': (req, res)=> {
+  'POST /admin/account/acquirerAccount/setLimit': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
+  },
+  'POST /admin/account/merchantAccount/getList': (req, res)=> {
     let {pageNum = 1, pageSize = 10} = req.body;
     pageNum *= 1;
     pageSize *= 1;
     let data = all.merchantAccount;
     const list = data.slice((pageNum - 1) * pageSize, pageNum * pageSize);
     res.json({code: '000000', msg: "success", data: {total: data.length, pageNum, pageSize, list}})
+  },
+  'POST /admin/account/acquirerAccount/merchantInvest': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
+  },
+  'POST /admin/account/acquirerAccount/merchantSetting': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
   },
 
   //用户管理
@@ -178,6 +202,9 @@ export default {
     const list = data.slice((pageNum - 1) * pageSize, pageNum * pageSize);
     res.json({code: '000000', msg: "success", data: {total: data.length, pageNum, pageSize, list}})
   },
+  'POST /admin/finance/financeDetail/manual': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
+  },
   'POST /admin/finance/unusualOrder/getList': (req, res)=> {
     let {pageNum = 1, pageSize = 10} = req.body;
     pageNum *= 1;
@@ -196,6 +223,20 @@ export default {
     let data = all.financeBalance;
     const list = data.slice((pageNum - 1) * pageSize, pageNum * pageSize);
     res.json({code: '000000', msg: "success", data: {total: data.length, pageNum, pageSize, list}})
+  },
+  'POST /admin/finance/financeSettlement/getList': (req, res)=> {
+    let {pageNum = 1, pageSize = 10} = req.body;
+    pageNum *= 1;
+    pageSize *= 1;
+    let data = all.financeSettlement;
+    const list = data.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+    res.json({code: '000000', msg: "success", data: {total: data.length, pageNum, pageSize, list}})
+  },
+  'POST /admin/finance/financeSettlement/getAvailableAmount': (req, res)=> {
+    res.json({code: '000000', msg: "success", data: {amount: '15000.00'}})
+  },
+  'POST /admin/finance/financeSettlement/startSettle': (req, res)=> {
+    res.json({code: '000000', msg: "success"})
   },
 };
 

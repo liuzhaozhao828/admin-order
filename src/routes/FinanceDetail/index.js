@@ -4,8 +4,11 @@
 import React from 'react';
 import { connect } from 'dva';
 import moment from 'moment'
-import { Card, Table, Select, Input, Button, DatePicker } from 'antd'
+import { Card, Table, Select, Input, Button, DatePicker, Modal } from 'antd'
 import request from '../../utils/request'
+import {dealQuery} from '../../utils/tools'
+import {message} from "antd/lib/index";
+import DetailForm from './DetailForm'
 
 const { Option } = Select
 const { RangePicker } = DatePicker
@@ -17,7 +20,9 @@ const { RangePicker } = DatePicker
   query: financeDetail
 }))
 class FinanceDetail extends React.Component {
-  state = {}
+  state = {
+    visible: false
+  }
 
   componentDidMount() {
     this.getList()
@@ -25,7 +30,8 @@ class FinanceDetail extends React.Component {
 
   getList=(params={})=>{
     const { query } = this.props
-    request('/admin/finance/financeDetail/getList', {...query, pageSize: 10, pageNum: 1, ...params}).then(({data: {code, msg, data={}}}) => {
+    const { pageSize = 10, pageNum = 1 } = this.state
+    request('/admin/finance/financeDetail/getList', {...query, pageSize, pageNum, ...params}).then(({data: {code, msg, data={}}}) => {
       const { total = 0, pageSize = 10, pageNum = 1, list=[] } = data
       this.setState({
         total,
@@ -49,22 +55,12 @@ class FinanceDetail extends React.Component {
     })
   }
 
-  dealQuery=() => {
-    const { query } = this.props
-    let params = '';
-    for (const key in query) {
-      if (Object.prototype.hasOwnProperty.call(query, key)) {
-        params = `${params}&${key}=${query[key]}`;
-      }
-    }
-    return params ? `?${params}` : '';
-  }
 
 
   render() {
 
     const { query={} } = this.props
-    const { total = 0, pageSize = 10, pageNum = 1, list=[] } = this.state
+    const { total = 0, pageSize = 10, pageNum = 1, list=[], visible } = this.state
 
     const columns=[{
       title: '订单号',
@@ -108,13 +104,22 @@ class FinanceDetail extends React.Component {
       <div>
         <Card title={<span className='title_1'>收支明细</span>}
               extra={
-                <a
-                  href={`/admin/finance/financeDetail/exportData${this.dealQuery()}`}
-                  rel="noopener noreferrer nofollow"
-                  target="_blank"
-                >
-                  <Button type="primary">导出</Button>
-                </a>
+                <div>
+                  <a
+                    href={`/admin/finance/financeDetail/exportData${dealQuery(query)}`}
+                    rel="noopener noreferrer nofollow"
+                    target="_blank"
+                  >
+                    <Button type="primary">导出</Button>
+                  </a>
+                  <Button type={'primary'}
+                          style={{marginLeft: '10px'}}
+                          onClick={()=>{
+                            this.setState({
+                              visible: true,
+                            })
+                          }} >手工录入</Button>
+                </div>
               }>
           <div style={{ overflow: 'hidden', marginBottom: '10px' }}>
             <ul className='query'>
@@ -195,7 +200,6 @@ class FinanceDetail extends React.Component {
 
           <Table dataSource={list}
                  columns={columns}
-                 rowKey='orderId'
                  pagination={{
                    total,
                    current: pageNum * 1,
@@ -208,6 +212,34 @@ class FinanceDetail extends React.Component {
                    },
                  }}/>
         </Card>
+
+        <Modal visible={visible}
+               title={'手工录入'}
+               onCancel={()=>{
+                 this.setState({
+                   visible: false,
+                 })}
+               }
+               footer={null}
+               key={(new Date()).getTime()}
+        >
+          <DetailForm onCancel={()=>{
+                        this.setState({
+                          visible: false,
+                        })}
+                      }
+                      onSubmit={(values)=>{
+                        request('/admin/finance/financeDetail/manual', values).then(({data: { code }}) => {
+                            if(code==='000000'){
+                              message.success('录入成功');
+                              this.setState({
+                                visible: false,
+                              })
+                              this.getList()
+                            }
+                          }
+                        )}}/>
+        </Modal>
 
       </div>
     );

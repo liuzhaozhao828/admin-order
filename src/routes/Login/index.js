@@ -1,10 +1,16 @@
 import React from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { Icon, Input, Button } from 'antd';
+import { Icon, Input, Button, message } from 'antd';
 import styles from './index.less';
+import request from '../../utils/request'
+
 
 class Login extends React.Component {
+
+  state={
+
+  }
 
   componentDidMount(){
     const {login, dispatch} = this.props
@@ -15,12 +21,35 @@ class Login extends React.Component {
   }
 
   onSubmit=()=>{
-
+    const { dispatch } = this.props
+    const {userName, password} = this.state
+    if(!(userName&&password)){
+      message.warn('请输入账号名和密码！')
+      return false
+    }
+    request('/admin/common/login', {userName, password}).then(({data: {code, msg, data={}}}) => {
+      if(code==='000000'){
+        const { userName, nickName, login=false } = data
+        console.warn('data', data)
+        if(login){
+          dispatch({
+            type: 'app/save',
+            payload: {
+              userName,
+              nickName,
+              login
+            }
+          })
+          dispatch(routerRedux.push(`/`))
+        }
+      }
+    })
   }
 
 
   render() {
     const {login} = this.props
+    const {userName, password} = this.state
     if(login){
       return null
     }
@@ -29,13 +58,23 @@ class Login extends React.Component {
           <div className={styles.content}>
             <p className={styles["sys-name"]}>管理后台</p>
 
-            <Input value={1}
+            <Input value={userName}
+                   onChange={(e)=>{
+                     this.setState({
+                       userName: e.target.value.trim()
+                     })
+                   }}
                    className={styles["login-input"]}
                    placeholder='用户名'
                    suffix={<Icon type='user'/>}
             />
             <Input type='password'
-                   // value={}
+                   value={password}
+                   onChange={(e)=>{
+                     this.setState({
+                       password: e.target.value.trim()
+                     })
+                   }}
                    className={styles["login-input"]}
                    placeholder='密码'
                    onPressEnter={this.onSubmit}

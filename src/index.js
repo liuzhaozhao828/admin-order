@@ -3,7 +3,9 @@ import './index.less';
 import { userInfo } from './services/app';
 
 
-userInfo().then(({data: {login, userName}})=>{
+userInfo().then(({data: {data={}, code, msg}})=>{
+
+  const  {login=false, userName=''} = data
   // 1. Initialize
   const app = dva({
     initialState:{

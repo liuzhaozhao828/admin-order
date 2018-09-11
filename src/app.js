@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import {Route, Redirect, Switch, Link, routerRedux } from 'dva/router';
-import { Layout, Menu, Icon, Row, Col, Popconfirm, LocaleProvider } from 'antd';
+import { Layout, Menu, Icon, Popconfirm, LocaleProvider } from 'antd';
 import { menu, comps } from './menu';
 import styles from './index.less';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
@@ -30,7 +30,7 @@ class App extends React.Component {
 
 
   render() {
-    const {activeKey, login=false} = this.props
+    const {activeKey, login=false, userName, dispatch } = this.props
     if(!login){
       return null
     }
@@ -48,25 +48,46 @@ class App extends React.Component {
                 {/*onClick={this.toggle}*/}
                 {/*/>*/}
               {/*</Col>*/}
-              <Menu className="header-menu" mode="horizontal" style={{
+              <div style={{
                 float: 'right',
                 lineHeight: '64px',
                 height: '65px',
                 boxSizing: 'border-box',
-                marginRight: '10px',
+                marginRight: '20px',
                 backgroundColor:'transparent',
+                fontSize: '14px',
+                color: '#999999'
               }}>
-                <SubMenu title={< span > 欢迎 test <Icon type="caret-down" /></span>}
-                >
-                  <Menu.Item key="logout">
-                    <Popconfirm placement="bottomRight" title="确定要退出登录?" okText="确定" cancelText="取消" onConfirm={()=>{
-                      window.location.href='http://jmis.jd.com/remote/loginOut.htm?LT=erp&AC=KFALL&callback=http://'+window.location.hostname
-                    }}>
-                      <a>注销</a>
+                < span > 欢迎
+                  <span style={{color: '#1890ff', marginLeft: '10px'}}>{userName}</span>
+                  <Popconfirm placement="bottomRight" title="确定要退出登录?" okText="确定" cancelText="取消" onConfirm={()=>{
+                    dispatch({
+                      type: 'app/logout',
+                    })
+                  }}>
+                       <Icon type="logout" theme="outlined" className={styles["logout-icon"]}/>
                     </Popconfirm>
-                  </Menu.Item>
-                </SubMenu>
-              </Menu>
+                </span>
+              </div>
+              {/*<Menu className="header-menu" mode="horizontal" style={{*/}
+                {/*float: 'right',*/}
+                {/*lineHeight: '64px',*/}
+                {/*height: '65px',*/}
+                {/*boxSizing: 'border-box',*/}
+                {/*marginRight: '10px',*/}
+                {/*backgroundColor:'transparent',*/}
+              {/*}}>*/}
+                {/*<SubMenu title={< span > 欢迎 test <Icon type="caret-down" /></span>}*/}
+                {/*>*/}
+                  {/*<Menu.Item key="logout">*/}
+                    {/*<Popconfirm placement="bottomRight" title="确定要退出登录?" okText="确定" cancelText="取消" onConfirm={()=>{*/}
+                      {/*window.location.href='http://jmis.jd.com/remote/loginOut.htm?LT=erp&AC=KFALL&callback=http://'+window.location.hostname*/}
+                    {/*}}>*/}
+                      {/*<a>注销</a>*/}
+                    {/*</Popconfirm>*/}
+                  {/*</Menu.Item>*/}
+                {/*</SubMenu>*/}
+              {/*</Menu>*/}
 
           </Header>
           <Layout>
@@ -78,7 +99,7 @@ class App extends React.Component {
               <div className={styles["menu-text"]}>
                 主导航
               </div>
-              <Menu theme="dark" mode="inline" selectedKeys={[activeKey]}>
+              <Menu theme="dark" mode="inline" selectedKeys={[activeKey]} defaultOpenKeys={['order']}>
                 {
                   menu.map(({key,name,icon,children=[]})=>{
                     if(children.length>0){

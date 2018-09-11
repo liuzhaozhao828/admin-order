@@ -2,8 +2,7 @@
  * Created by liuzhaozhao on 2017/12/29.
  */
 import React from 'react';
-import {Route, Switch, Redirect } from 'dva/router';
-//import styles from './index.less'
+import {Route, Switch } from 'dva/router';
 import UserManageHome from "./home";
 import UserForm from "./UserForm";
 import OptionRecords from "./OptionRecords";

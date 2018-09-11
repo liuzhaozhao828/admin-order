@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import { connect } from 'dva';
-import { Link, routerRedux } from 'dva/router';
 import { Card, Table, Input, Button, DatePicker } from 'antd'
 import request from '../../utils/request'
 import styles from './index.less'

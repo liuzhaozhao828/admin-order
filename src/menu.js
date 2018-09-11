@@ -5,6 +5,7 @@ import AcquirerAccount from './routes/AcquirerAccount';
 import FinanceDetail from './routes/FinanceDetail';
 import UnusualOrder from './routes/UnusualOrder';
 import FinanceBalance from './routes/FinanceBalance';
+import FinanceSettlement from './routes/FinanceSettlement';
 import UserManage from './routes/UserManage';
 
 export const menu=[
@@ -80,6 +81,9 @@ export const comps=[
   },{
     key: 'financeBalance',
     comp: FinanceBalance,
+  },{
+    key: 'FinanceSettlement',
+    comp: FinanceSettlement,
   },{
     key: 'userManage',
     comp: UserManage,
