@@ -13,7 +13,7 @@ class ChangePassword extends React.Component {
   }
 
   componentDidMount(){
-    const {login, dispatch, userName} = this.props
+    const { userName} = this.props
     this.setState({
       userName
     })
@@ -54,7 +54,7 @@ class ChangePassword extends React.Component {
 
 
   render() {
-    const {login, dispatch} = this.props
+    const { dispatch} = this.props
     const {userName, oldPassword, newPassword, confirmPassword, error} = this.state
 
     return (
