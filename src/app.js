@@ -30,7 +30,7 @@ class App extends React.Component {
 
 
   render() {
-    const {activeKey, login=false, userName, dispatch } = this.props
+    const {activeKey, login=false, userName, userType='0',  dispatch } = this.props
     if(!login){
       return null
     }
@@ -48,46 +48,55 @@ class App extends React.Component {
                 {/*onClick={this.toggle}*/}
                 {/*/>*/}
               {/*</Col>*/}
-              <div style={{
-                float: 'right',
-                lineHeight: '64px',
-                height: '65px',
-                boxSizing: 'border-box',
-                marginRight: '20px',
-                backgroundColor:'transparent',
-                fontSize: '14px',
-                color: '#999999'
-              }}>
-                < span > 欢迎
-                  <span style={{color: '#1890ff', marginLeft: '10px'}}>{userName}</span>
-                  <Popconfirm placement="bottomRight" title="确定要退出登录?" okText="确定" cancelText="取消" onConfirm={()=>{
-                    dispatch({
-                      type: 'app/logout',
-                    })
-                  }}>
-                       <Icon type="logout" theme="outlined" className={styles["logout-icon"]}/>
-                    </Popconfirm>
-                </span>
-              </div>
-              {/*<Menu className="header-menu" mode="horizontal" style={{*/}
+              {/*<div style={{*/}
                 {/*float: 'right',*/}
                 {/*lineHeight: '64px',*/}
                 {/*height: '65px',*/}
                 {/*boxSizing: 'border-box',*/}
-                {/*marginRight: '10px',*/}
+                {/*marginRight: '20px',*/}
                 {/*backgroundColor:'transparent',*/}
+                {/*fontSize: '14px',*/}
+                {/*color: '#999999'*/}
               {/*}}>*/}
-                {/*<SubMenu title={< span > 欢迎 test <Icon type="caret-down" /></span>}*/}
-                {/*>*/}
-                  {/*<Menu.Item key="logout">*/}
-                    {/*<Popconfirm placement="bottomRight" title="确定要退出登录?" okText="确定" cancelText="取消" onConfirm={()=>{*/}
-                      {/*window.location.href='http://jmis.jd.com/remote/loginOut.htm?LT=erp&AC=KFALL&callback=http://'+window.location.hostname*/}
-                    {/*}}>*/}
-                      {/*<a>注销</a>*/}
+                {/*< span > 欢迎*/}
+                  {/*<span style={{color: '#1890ff', marginLeft: '10px'}}>{userName}</span>*/}
+                  {/*<Popconfirm placement="bottomRight" title="确定要退出登录?" okText="确定" cancelText="取消" onConfirm={()=>{*/}
+                    {/*dispatch({*/}
+                      {/*type: 'app/logout',*/}
+                    {/*})*/}
+                  {/*}}>*/}
+                       {/*<Icon type="logout" theme="outlined" className={styles["logout-icon"]}/>*/}
                     {/*</Popconfirm>*/}
-                  {/*</Menu.Item>*/}
-                {/*</SubMenu>*/}
-              {/*</Menu>*/}
+                {/*</span>*/}
+              {/*</div>*/}
+              <Menu mode="horizontal" style={{
+                float: 'right',
+                lineHeight: '64px',
+                height: '65px',
+                boxSizing: 'border-box',
+                marginRight: '10px',
+                backgroundColor:'transparent',
+                color: '#999999'
+              }}>
+                <SubMenu title={< span > 欢迎 <span style={{color: '#1890ff', marginLeft: '10px'}}>{userName}</span> <Icon type="caret-down" /></span>}
+                          className={`header-sub-menu`}
+                >
+                  <Menu.Item key="logout">
+                    <Popconfirm placement="bottomRight" title="确定要退出登录?" okText="确定" cancelText="取消" onConfirm={()=>{
+                      dispatch({
+                        type: 'app/logout',
+                      })
+                    }}>
+                      <a>注销</a>
+                    </Popconfirm>
+                  </Menu.Item>
+                  <Menu.Item key="edit">
+                      <a onClick={()=>{
+                        dispatch(routerRedux.push('./changePassword'))
+                      }}>修改密码</a>
+                  </Menu.Item>
+                </SubMenu>
+              </Menu>
 
           </Header>
           <Layout>
@@ -101,7 +110,10 @@ class App extends React.Component {
               </div>
               <Menu theme="dark" mode="inline" selectedKeys={[activeKey]} defaultOpenKeys={['order']}>
                 {
-                  menu.map(({key,name,icon,children=[]})=>{
+                  menu.map(({key,name,icon,type=[],children=[]})=>{
+                    if(!type.includes(userType)){
+                      return null
+                    }
                     if(children.length>0){
                       return(
                         <SubMenu key={key} title={<span><Icon type={icon}/>{name}</span>}>

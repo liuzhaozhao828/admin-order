@@ -20,16 +20,16 @@ class Login extends React.Component {
 
   }
 
-  onSubmit=()=>{
+  onSubmit=(params={})=>{
     const { dispatch } = this.props
     const {userName, password} = this.state
     if(!(userName&&password)){
       message.warn('请输入账号名和密码！')
       return false
     }
-    request('/admin/common/login', {userName, password}).then(({data: {code, msg, data={}}}) => {
+    request('/admin/common/login', {userName, password, userType:0, ...params}).then(({data: {code, msg, data={}}}) => {
       if(code==='000000'){
-        const { userName, nickName, login=false } = data
+        const { userName, nickName, login=false, userType='0' } = data
         console.warn('data', data)
         if(login){
           dispatch({
@@ -37,7 +37,8 @@ class Login extends React.Component {
             payload: {
               userName,
               nickName,
-              login
+              login,
+              userType
             }
           })
           dispatch(routerRedux.push(`/`))
@@ -81,7 +82,8 @@ class Login extends React.Component {
                    suffix={<Icon type="lock" theme="outlined" />}
             />
             <div className={styles["login-button"]}>
-              <Button type='primary' onClick={this.onSubmit} loading={false} >登录</Button>
+              <span onClick={()=>this.onSubmit({userType: 1})} className={styles["merchant-login"]}>商户入口</span>
+              <Button type='primary' onClick={()=>this.onSubmit()} loading={false} >登录</Button>
             </div>
           </div>
         </div>

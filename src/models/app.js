@@ -41,7 +41,8 @@ export default {
           payload:{
             login: false,
             userName: '',
-            nickName: ''
+            nickName: '',
+            userType: ''
           }
         });
         yield put(routerRedux.push('/login'));

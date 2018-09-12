@@ -1,6 +1,3 @@
-/**
- * Created by zhangbohan on 17/3/21.
- */
 import Mock from 'mockjs';
 
 
@@ -13,6 +10,7 @@ export default {
           "login": true,
           "userName": 'zz',
           "nickName": 'zz',
+          "userType": 0,
         }
       }	))
     },
@@ -25,10 +23,17 @@ export default {
           "login": true,
           "userName": userName,
           "nickName": 'zz',
+          "userType": req.body.userType,
         }
       }	))
   },
     'POST /admin/common/logout'  (req, res) {
+      res.json( Mock.mock({
+        "code": "000000",
+        "msg": "success",
+      }	))
+  },
+    'POST /admin/common/changePassword'  (req, res) {
       res.json( Mock.mock({
         "code": "000000",
         "msg": "success",

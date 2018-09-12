@@ -1,6 +1,3 @@
-/**
- * Created by liuzhaozhao on 2017/12/29.
- */
 import React from 'react';
 import {Form, Input, Button, Checkbox} from 'antd'
 import {connect} from "dva";
@@ -106,7 +103,7 @@ class SettingForm extends React.Component {
           </FormItem>
           <FormItem key='services'
                     {...formItemLayout}
-                    label="注资费率"
+                    label="可用服务"
           >
             {getFieldDecorator('services', {
 

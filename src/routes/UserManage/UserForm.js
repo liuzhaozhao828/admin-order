@@ -1,6 +1,3 @@
-/**
- * Created by liuzhaozhao on 2017/12/29.
- */
 import React from 'react';
 import { Link, routerRedux } from 'dva/router'
 import {Form, Input, Select, Button, Card} from 'antd'

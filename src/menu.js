@@ -13,6 +13,7 @@ export const menu=[
     key:'order',
     name:"订单管理",
     icon:"profile",
+    type:[0, 1],
     children: [{
       key:'payOrder',
       name:"支付订单",
@@ -24,6 +25,7 @@ export const menu=[
     key:'account',
     name:"账户管理",
     icon:"credit-card",
+    type:[0],
     children: [{
       key:'acquirerAccount',
       name:"收单账户",
@@ -35,6 +37,7 @@ export const menu=[
     key:'finance',
     name:"财务管理",
     icon:"pay-circle",
+    type:[0, 1],
     children: [{
       key:'financeDetail',
       name:"收支明细",
@@ -52,6 +55,7 @@ export const menu=[
     key:'systemManage',
     name:"系统配置",
     icon:"setting",
+    type:[0],
     children: [{
       key:'userManage',
       name:"用户管理",

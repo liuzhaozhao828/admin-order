@@ -1,6 +1,3 @@
-/**
- * Created by liuzhaozhao on 2017/12/29.
- */
 import React from 'react';
 import {connect} from "dva";
 import {Form, Input, Select, Button, DatePicker} from 'antd'

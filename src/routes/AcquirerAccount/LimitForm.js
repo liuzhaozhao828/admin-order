@@ -1,6 +1,3 @@
-/**
- * Created by liuzhaozhao on 2017/12/29.
- */
 import React from 'react';
 import {Form, Input, Button} from 'antd'
 import {connect} from "dva";

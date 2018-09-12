@@ -1,6 +1,3 @@
-/**
- * Created by liuzhaozhao on 2017/12/29.
- */
 import React from 'react';
 import { connect } from 'dva';
 import { Card, Table, Select, Input, Button, Modal, message} from 'antd'
