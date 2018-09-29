@@ -108,7 +108,7 @@ class App extends React.Component {
               <div className={styles["menu-text"]}>
                 主导航
               </div>
-              <Menu theme="dark" mode="inline" selectedKeys={[activeKey]} defaultOpenKeys={['order']}>
+              <Menu theme="dark" mode="inline" selectedKeys={[activeKey]} defaultOpenKeys={['payOrder']}>
                 {
                   menu.map(({key,name,icon,type=[],children=[]})=>{
                     if(!type.includes(userType)){
