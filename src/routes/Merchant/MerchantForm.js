@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link, routerRedux } from 'dva/router'
-import {Form, Input, Select, Button, Card} from 'antd'
+import {Form, Input, Button, Card} from 'antd'
 import request from '../../utils/request'
 import {connect} from "dva";
 
 const FormItem = Form.Item
-const Option = Select.Option
 const TextArea = Input.TextArea
 
 @connect()

@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Link, routerRedux } from 'dva/router';
-import { Card, Table, Select, message, Button, Modal, Row, Col } from 'antd'
+import { routerRedux } from 'dva/router';
+import { Card, Table, message, Button, Modal, Row, Col } from 'antd'
 import request from '../../utils/request'
 import styles from './index.less'
 import EditChannel from './EditChannel'
 
-const { Option } = Select
 const ButtonGroup = Button.Group
 
 
@@ -70,7 +69,7 @@ class MerchantSetting extends React.Component {
     if(!type){
       return
     }
-    request('/admin/merchant/channel/edit', {...value}).then(({data: {code, msg}}) => {
+    request('/admin/merchant/channel/edit', {...value}).then(({data: {code}}) => {
       if(code==='000000'){
         message.success('修改成功')
         this.setState({
@@ -88,7 +87,7 @@ class MerchantSetting extends React.Component {
     if(!type){
       return
     }
-    request('/admin/merchant/channel/bind', {type, merchantId, merchantName, merchantAccount,channels}).then(({data: {code, msg}}) => {
+    request('/admin/merchant/channel/bind', {type, merchantId, merchantName, merchantAccount,channels}).then(({data: {code}}) => {
       if(code==='000000'){
         message.success('绑定成功')
         this.setState({
@@ -117,7 +116,7 @@ class MerchantSetting extends React.Component {
 
     const {
       merchantId='', merchantName = '', merchantAccount = '', injection=[], injectionAll=[], balance=[],balanceAll=[],
-      visible = false, value={}, visibleBind = false, type, selectedRowKeys=[], selectedRows
+      visible = false, value={}, visibleBind = false, type, selectedRowKeys=[]
     } = this.state
 
     let allChannelList = []

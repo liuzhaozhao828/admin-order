@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Link, routerRedux } from 'dva/router';
-import { Card, Table, Select, Input, Button, Modal, message } from 'antd'
+import { Card, Table, Input, Button, Modal, message } from 'antd'
 import request from '../../utils/request'
 import InvestForm from './InvestForm'
 import styles from './index.less'
 
-const { Option } = Select
 const ButtonGroup = Button.Group
 
 

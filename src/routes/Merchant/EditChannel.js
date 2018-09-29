@@ -1,12 +1,9 @@
 import React from 'react';
-import { Link, routerRedux } from 'dva/router'
-import {Form, Input, Select, Button, Card} from 'antd'
-import request from '../../utils/request'
+import {Form, Input, Select, Button} from 'antd'
 import {connect} from "dva";
 
 const FormItem = Form.Item
 const Option = Select.Option
-const TextArea = Input.TextArea
 
 @connect()
 class EditChannel extends React.Component {

@@ -22,9 +22,8 @@ class InvestForm extends React.Component {
 
 
   render(){
-    const {record={}, onCancel} = this.props
+    const { onCancel } = this.props
     const { getFieldDecorator } = this.props.form;
-    const { accountId, merchantId } = record
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
